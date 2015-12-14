@@ -1,0 +1,22 @@
+λ>                                         | 2/..|                                           <λ
+
+
+
+
+
+
+
+
+                     Naive lens implementation: (a -> a) -> s -> (a, s)
+
+
+
+
+
+
+
+
+
+
+
+λ>                                                                                           <λ

@@ -1,0 +1,22 @@
+λ>                                         | 3/..|                                           <λ
+
+
+
+
+
+
+
+
+                       Helping our brain to transition to functor-based lens
+                               via our favourite Functor — a List!
+                                    (a -> [a]) -> s -> (a, [s])
+
+
+
+
+
+
+
+
+
+λ>                                                                                           <λ
