@@ -1,9 +1,10 @@
 module Util ( ($>),       Compose (..), geqErr, lrgErr, iGuard,
-              Const (..), Product (..)
+              Const (..), Product (..), Identity (..)
             ) where
 
 import           Data.Functor         (($>))
 import           Data.Functor.Compose (Compose (..))
+import           Data.Functor.Identity (runIdentity, Identity(..))
 import           Data.Functor.Product (Product (..))
 import           Control.Applicative  (Const (..))
 
