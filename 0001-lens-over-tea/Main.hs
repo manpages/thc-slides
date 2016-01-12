@@ -33,11 +33,13 @@ ix i f (x:rest)
   | i < 0 = geqErr
   | True  = (x:) <$> ix (i-1) f rest
 ------------------------------------------------------------------------
-over :: Lens s t a b -> (a -> b) -> s -> t
-over l f = runIdentity . l (Identity . f)
-------------------------------------------------------------------------
-view :: Lens s t a b -> s -> a
+type Getting s a = (a -> Const a a) -> s -> Const a s 
+view :: Getting s a -> s -> a
 view l = getConst . l Const
+------------------------------------------------------------------------
+type Setting s t a b = (a -> Identity b) -> s -> Identity t
+over :: Setting s t a b -> (a -> b) -> s -> t
+over l f = runIdentity . l (Identity . f)
 ------------------------------------------------------------------------
 
 -- _1 :: Functor f => (a -> f b) -> (a, x) -> f (b, x)
@@ -78,3 +80,25 @@ choosing _  l2 g (Right y) = l2 g y >$< Right
 -- become clear later.)
 united :: Lens' s ()
 united g = ($>) $ g ()
+
+------------------------------------------------------------------------
+type LensA s t a b = forall f . (Applicative f) => (a -> f b) -> s -> f t
+type LensA' s a    = LensA s s a a
+------------------------------------------------------------------------
+
+lensa :: (s -> a) -> (s -> b -> t) -> LensA s t a b
+lensa get set g y = (g . get) y >$< set y 
+
+_allDishonest :: Eq a => a -> LensA' [a] a
+_allDishonest x = lens (const x) $ \y x1 -> map (phi x1) y
+  where 
+    phi x1 xi
+      | xi == x = x1
+      | True    = xi
+
+_allBetter :: Eq a => a -> LensA' [a] a
+_allBetter x g y = traverse phi y
+  where 
+    phi xi
+      | xi == x = g    xi
+      | True    = pure xi

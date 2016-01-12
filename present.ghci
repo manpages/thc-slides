@@ -43,7 +43,7 @@ let slide_next _ = let loadMaybe x = do {
                     return $ unlines $ [ ":!clear"
                                        , "lastRead <- readFile \"" ++ ioSlide ++ ".txt\""
                                        , "putStr lastRead"
-                                       , ":!read"
+                                       , ":!read _"
                                        ] ++ (ioCode :: [String]) ++ [ ":script ../present.ghci" ] }
 
 let slide_previous _ = slide_fioMinusMinus >> slide_fioMinusMinus >> slide_next ""
